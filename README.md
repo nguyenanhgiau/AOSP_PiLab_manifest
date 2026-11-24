@@ -1,20 +1,21 @@
-# GloDroid+
-GloDroid+ is an AOSP for the Raspberry Pi, specifically designed for research, testing, and hardware prototyping for Android Platform Engineers.
+# AOSP-PiLab
+**AOSP-PiLab** is an AOSP distribution for the Raspberry Pi, specifically designed for research, testing, and hardware prototyping for Android Platform Engineers.
 
 The Raspberry Pi is an accessible hardware platform with a vast, dynamic support community, possessing sufficient processing power to seamlessly run the Android operating system.
 
-This project is the combination of two open-source repositories: GloDroid and Raspberry-vanilla. The GloDroid+ eliminated existing drawbacks while inheriting the technical excellence of both original projects:
-* Full support for U-Boot as the Bootloader.
-* Integrated Recovery environment and Fastbootd.
-* Support for Super Partitions (Dynamic Partitions) architecture.
-* A clean, modular codebase architecture that is easy to maintain and expand for custom hardware development.
+Built on top of the solid hardware enablement foundation of **Raspberry Vanilla** (and inspired by **GloDroid**'s boot architecture), AOSP-PiLab extends Raspberry Vanilla with standard Android system-level features such as:
+- Full support for **U-Boot** as the Bootloader.
+- Integrated **Recovery** environment and **fastbootd**.
+- Support for **Super Partitions** (Dynamic Partitions) and GKI modular kernel layouts (`vendor_boot` / `vendor_dlkm`).
+- Android Verified Boot (**AVB**) and **SELinux Enforcing** mode.
+- A clean, modular codebase architecture that is easy to maintain and expand for custom hardware development (e.g., custom kernel drivers and AIDL HALs).
 
 # Acknowledgements & License
 This project is heavily based on the outstanding work of two upstream projects:
+* [Raspberry Vanilla](https://github.com/raspberry-vanilla/android_local_manifest)
 * [GloDroid](https://github.com/GloDroidCommunity/raspberry-pi)
-* [Raspberry-vanilla](https://github.com/raspberry-vanilla/android_local_manifest)
 
-GloDroid+ does not claim ownership of the original codebases. All modifications and integrated source codes strictly inherit the respective open-source licenses of their original upstream projects (primarily the Apache License 2.0 for AOSP components and GNU GPLv2 for Kernel/U-Boot components). Please refer to the specific repositories for detailed licensing information.
+AOSP-PiLab does not claim ownership of the original codebases. All modifications and integrated source codes strictly inherit the respective open-source licenses of their original upstream projects (primarily the Apache License 2.0 for AOSP components and GNU GPLv2 for Kernel/U-Boot components). Please refer to the specific repositories for detailed licensing information.
 
 ***
 
@@ -24,13 +25,13 @@ GloDroid+ does not claim ownership of the original codebases. All modifications 
 
 2. Install required packages:
 
-```
+```bash
 sudo apt-get install dosfstools e2fsprogs fdisk kpartx mtools rsync
 ```
 
 3. Initialize the repo:
 
-```
+```bash
 mkdir Glodroid && cd Glodroid
 repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-17.0.0_r1 -m default.xml --git-lfs
 git clone https://github.com/nguyenanhgiau/GloDroidPlus_manifest.git -b glodroid-a17 .repo/local_manifests
@@ -38,19 +39,19 @@ git clone https://github.com/nguyenanhgiau/GloDroidPlus_manifest.git -b glodroid
 
 4. Sync the source code:
 
-```
+```bash
 repo sync -c -j$(nproc) --no-clone-bundle
 ```
 
 5. Set up the Android build environment:
 
-```
+```bash
 . build/envsetup.sh
 ```
 
 6. Select the build target (one of them: `rpi4` for tablet UI, `rpi4_tv` for Android TV, or `rpi4_car` for Android Automotive):
 
-```
+```bash
 lunch rpi4-aosp_current-userdebug
 #lunch rpi4_tv-aosp_current-userdebug
 #lunch rpi4_car-aosp_current-userdebug
@@ -58,7 +59,7 @@ lunch rpi4-aosp_current-userdebug
 
 7. Build the images:
 
-```
+```bash
 make images -j$(nproc) # The output will be generated at $OUT/images.tar.gz
 make sdcard -j$(nproc) # The output will be generated at $OUT/sdcard.img
 ```
