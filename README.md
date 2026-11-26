@@ -32,9 +32,9 @@ sudo apt-get install dosfstools e2fsprogs fdisk kpartx mtools rsync
 3. Initialize the repo:
 
 ```bash
-mkdir Glodroid && cd Glodroid
+mkdir AOSP_PiLab && cd AOSP_PiLab
 repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-17.0.0_r1 -m default.xml --git-lfs
-git clone https://github.com/nguyenanhgiau/GloDroidPlus_manifest.git -b glodroid-a17 .repo/local_manifests
+git clone https://github.com/nguyenanhgiau/AOSP_PiLab_manifest.git -b glodroid-a17 .repo/local_manifests
 ```
 
 4. Sync the source code:
@@ -66,7 +66,7 @@ make sdcard -j$(nproc) # The output will be generated at $OUT/sdcard.img
 
 Build the Android kernel (optional):
 
-Look into [Android kernel build instructions](https://github.com/nguyenanhgiau/GloDroidPlus_kernel_manifest)
+Look into [Android kernel build instructions](https://github.com/nguyenanhgiau/AOSP_PiLab_kernel_manifest)
 
 ## How to Flash an Image to an RPi 4 Device (Choose One of the Methods Below)
 
